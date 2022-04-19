@@ -13,10 +13,10 @@ def write_user_docs(iterations=0, name_count=200)
 	iterations.times do |iteration|
 		name_count.times do |name_number|
 			doc = { :filename => 'sheet=#{iteration}',
-				 :updated_at => Time.now.utc, 
-				 :username => Names::LIST[name_number],
-				 :data => @data
-			       }
+				:updated_at => Time.now.utc, 
+				:username => Names::LIST[name_number],
+				:data => @data
+			      }
 			@col.insert_one(doc)
 		end
 	end
