@@ -1,20 +1,23 @@
 require 'rubygems'
 require 'mongo'
+
+$LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__))) \
+    unless $LOAD_PATH.include?(File.expand_path(File.dirname(__FILE__)))
 require 'names'
 
-@con = Mongo::MongoClient.new('localhost', 40000)
-@col = @con['cloud-docs']['spreadsheets']
+@con  = Mongo::Client.new(["localhost:40000"], :database => 'cloud-docs')
+@col  = @con['spreadsheets']
 @data = 'abcde' * 1000
 
 def write_user_docs(iterations=0, name_count=200)
 	iterations.times do |iteration|
 		name_count.times do |name_number|
-			docs = { :filename => 'sheet=#{iteration}',
+			doc = { :filename => 'sheet=#{iteration}',
 				 :updated_at => Time.now.utc, 
 				 :username => Names::LIST[name_number],
 				 :data => @data
 			       }
-			@col.insert(doc)
+			@col.insert_one(doc)
 		end
 	end
 end
