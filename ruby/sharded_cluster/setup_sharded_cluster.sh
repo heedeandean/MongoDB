@@ -1,5 +1,10 @@
 #!/bin/bash
+
 set -e
+
+echo Remove "data" directory...
+rm -rf ~/data
+echo Complete Remove "data" directory...
 
 echo
 echo "########################################"
